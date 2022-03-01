@@ -1,0 +1,16 @@
+{
+  "name": "loop-hackathon",
+  "packageManager": "yarn@3.2.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "compile": "yarn workspace hardhat run compile",
+    "chain": "yarn workspace hardhat run chain",
+    "clean": "yarn workspace hardhat run clean",
+    "test": "yarn workspace hardhat run test",
+    "hhscript": "yarn workspace hardhat run script",
+    "next:dev": "yarn workspace frontend run dev"
+  }
+}

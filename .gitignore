@@ -1,0 +1,7 @@
+.yarn/*
+.yarn/cache
+./yarn/install-state.gz
+./yarn/build-state.yml
+./yarn/unplugged
+.env
+node_modules
