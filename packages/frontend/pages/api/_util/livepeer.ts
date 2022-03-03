@@ -1,4 +1,4 @@
-import { post } from "./request";
+import { post, get } from "./request";
 import { error } from "./error";
 
 export const transferVideotoIPFS = async (assetId: string) => {
@@ -22,4 +22,11 @@ export const transferVideotoIPFS = async (assetId: string) => {
 
     return Promise.reject(error(500));
   }
+};
+
+export const getTask = async (taskId: string) => {
+  return await get(`https://livepeer.com/api/task/${taskId}`, {
+    Authorization: `Bearer ${process.env.LIVEPEER_API_KEY}`,
+    "Content-Type": "application/json",
+  });
 };

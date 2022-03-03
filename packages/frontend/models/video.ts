@@ -64,3 +64,39 @@ export const getVideos = async (userId: number) => {
 
   return await postGQL(query, null, "videos");
 };
+
+export const getUnMigratedVideos = async () => {
+  const query = `
+    query {
+      videos(
+        where: {
+          ipfs_cid: { _is_null: true }
+        }
+        limit: 50
+        order_by: { created_at: desc }
+      ) {
+        id
+        metadata
+        task_id: livepeer_data(path: "ipfs_task_id")
+      }
+    }
+  `;
+
+  return postGQL(query, null, "videos");
+};
+
+export const updateVideo = async (id: number, data: any) => {
+  const variables = { id, data };
+  const query = `
+    mutation($id: bigint!, $data: videos_set_input) {
+      update_videos_by_pk(
+        pk_columns: { id: $id }
+        _set: $data
+      ) {
+        id
+      }
+    }
+  `;
+
+  return await postGQL(query, variables, "update_videos_by_pk");
+};

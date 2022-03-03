@@ -7,14 +7,17 @@ type ErrorObj = {
 const request = async (
   url: string,
   method: string,
-  body: any = {},
+  body: any,
   headers: any = {}
 ) => {
-  const options = {
+  const options: any = {
     method,
-    body: JSON.stringify(body),
     headers,
   };
+
+  if (body) {
+    options.body = JSON.stringify(body);
+  }
 
   try {
     const response = await fetch(url, options);
@@ -66,6 +69,8 @@ export const postGQL = async (
         detail: error.message,
       }));
 
+      console.log(e);
+
       return Promise.reject(error(400, "Bad request", e));
     } else {
       const r = json.data[rootKey];
@@ -83,6 +88,14 @@ export const postGQL = async (
 export const post = async (url: string, body: any = {}, headers: any = {}) => {
   try {
     return await request(url, "POST", body, headers);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+export const get = async (url: string, headers: any = {}) => {
+  try {
+    return await request(url, "GET", null, headers);
   } catch (e) {
     return Promise.reject(e);
   }
