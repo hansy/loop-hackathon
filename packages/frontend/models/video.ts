@@ -43,3 +43,24 @@ export const createVideo = async (userId: number, video: VideoObj) => {
     return Promise.reject(e);
   }
 };
+
+export const getVideos = async (userId: number) => {
+  const query = `
+    query {
+      videos(
+        where: {
+          user_id: { _eq: ${userId} }
+        }
+        order_by: { created_at: desc }
+      ) {
+        id
+        livepeer_data
+        metadata
+        status
+        ipfs_cid
+      }
+    }
+  `;
+
+  return await postGQL(query, null, "videos");
+};

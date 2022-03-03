@@ -1,13 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getUserByWalletAddress } from "../../../models/user";
-import { createVideo } from "../../../models/video";
+import { createVideo, getVideos } from "../../../models/video";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  if (req.method === "POST") {
-    const { price, title, description, assetId } = req.body;
+  const { method, body } = req;
+
+  if (method === "POST") {
+    const { price, title, description, assetId } = body;
 
     try {
       const user = await getUserByWalletAddress("test", "test");
@@ -19,6 +21,15 @@ export default async function handler(
       });
 
       return res.status(201).json({ data: video });
+    } catch (e: any) {
+      return res.status(e.statusCode).json(e);
+    }
+  } else if (method === "GET") {
+    try {
+      const user = await getUserByWalletAddress("test", "test");
+      const videos = await getVideos(user.id);
+
+      return res.status(200).json({ data: videos });
     } catch (e: any) {
       return res.status(e.statusCode).json(e);
     }
