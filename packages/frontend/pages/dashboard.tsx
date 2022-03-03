@@ -24,12 +24,14 @@ const DashboardPage: NextPage = () => {
       <h1>Videos</h1>
       <table>
         <thead>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Status</th>
-          <th>IPFS CID</th>
-          <th></th>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>IPFS CID</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
           {videos.map((v: any) => {
