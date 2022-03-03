@@ -20,7 +20,7 @@ const UploadPage: NextPage = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/videos", {
+      const res = await fetch(`${window.location.hostname}/api/videos`, {
         method: "post",
         body: JSON.stringify({ price, title, description, assetId }),
         headers: {

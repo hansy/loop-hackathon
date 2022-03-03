@@ -16,7 +16,7 @@ type VideoUploaderProps = {
 const getRequestURL = async (fileName: string) => {
   try {
     const res: Response = await fetch(
-      `http://localhost:3000/api/upload?fileName=${fileName}`
+      `${window.location.hostname}/api/upload?fileName=${fileName}`
     );
     return await res.json();
   } catch {
