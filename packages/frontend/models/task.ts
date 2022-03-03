@@ -28,6 +28,8 @@ export const checkIPFSMigration = async () => {
         await sleep(500);
       }
     }
+
+    return true;
   } catch (e) {
     return Promise.reject(e);
   }
