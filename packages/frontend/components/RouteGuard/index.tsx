@@ -1,7 +1,6 @@
 import { FC, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useMoralis } from "react-moralis";
-// export { RouteGuard };
 
 const RouteGuard: FC<any> = ({ children }) => {
   const router = useRouter();
@@ -11,11 +10,6 @@ const RouteGuard: FC<any> = ({ children }) => {
   const publicPaths = ["/", "/[username]", "/[username]/[videoId]"];
 
   useEffect(() => {
-    // on initial load - run auth check
-    // authCheck();
-
-    console.log(isAuthenticated);
-
     if (!isAuthenticated && !publicPaths.includes(pathname)) {
       router.push({
         pathname: "/",

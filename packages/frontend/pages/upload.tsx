@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useState, FormEvent } from "react";
 import * as yup from "yup";
 import VideoUploader from "../components/VideoUploader";
+import { useMoralis } from "react-moralis";
 
 const videoSchema = yup.object().shape({
   price: yup.number().min(0).integer(),
@@ -15,6 +16,7 @@ const UploadPage: NextPage = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [assetId, setAssetId] = useState<string>("");
+  const { user } = useMoralis();
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ const UploadPage: NextPage = () => {
         body: JSON.stringify({ price, title, description, assetId }),
         headers: {
           "content-type": "application/json",
+          "x-loop-wa": user?.get("ethAddress"),
         },
       });
       const video = await res.json();

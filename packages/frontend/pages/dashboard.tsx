@@ -1,21 +1,31 @@
 import type { NextPage } from "next";
 import { useState, useEffect } from "react";
+import { useMoralis } from "react-moralis";
 
 const DashboardPage: NextPage = () => {
   const [videos, setVideos] = useState<Array<object>>([]);
+  const { user } = useMoralis();
 
   useEffect(() => {
     const getVideos = async () => {
-      try {
-        const res = await fetch("/api/videos");
-        const data = await res.json();
+      if (user) {
+        try {
+          const res = await fetch("/api/videos", {
+            headers: {
+              "x-loop-wa": user?.get("ethAddress"),
+            },
+          });
 
-        setVideos(data.data);
-      } catch (e) {
-        console.log(e);
+          if (res.ok) {
+            const data = await res.json();
+
+            setVideos(data.data);
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
     };
-
     getVideos();
   }, []);
 
