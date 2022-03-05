@@ -18,7 +18,7 @@ const RouteGuard: FC<any> = ({ children }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [pathname, isAuthenticated]);
 
   return children;
 };

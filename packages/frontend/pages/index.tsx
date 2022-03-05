@@ -9,7 +9,12 @@ const Home: NextPage = () => {
   const { authenticate, isAuthenticated, logout } = useMoralis();
 
   if (isAuthenticated) {
-    router.push({ pathname: router.query.redirectUrl || "/dashboard" });
+    let redirectPath = String(router.query.redirectUrl);
+
+    if (redirectPath === "null" || "undefined") {
+      redirectPath = "/dashboard";
+    }
+    router.push({ pathname: redirectPath });
 
     return null;
   }
