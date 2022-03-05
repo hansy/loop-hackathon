@@ -62,7 +62,7 @@ const VideoTable: FC<VideoTableProps> = ({ videos }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {video.metadata.title}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-normal text-sm text-gray-500">
                       {video.metadata.description}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -71,7 +71,7 @@ const VideoTable: FC<VideoTableProps> = ({ videos }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {video.status}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-normal text-sm text-gray-500">
                       {video.ipfs_cid}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

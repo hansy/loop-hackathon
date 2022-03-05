@@ -56,6 +56,9 @@ const VideoUploader: FC<VideoUploaderProps> = ({ onVideoUpload }) => {
       uppy={uppy}
       hideUploadButton={true}
       doneButtonHandler={undefined}
+      proudlyDisplayPoweredByUppy={false}
+      height={200}
+      width={0}
     />
   );
 };

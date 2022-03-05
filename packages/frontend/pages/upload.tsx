@@ -3,6 +3,7 @@ import { useState, FormEvent } from "react";
 import * as yup from "yup";
 import VideoUploader from "../components/VideoUploader";
 import { useMoralis } from "react-moralis";
+import Container from "../components/Container";
 
 const videoSchema = yup.object().shape({
   price: yup.number().min(0).integer(),
@@ -37,31 +38,87 @@ const UploadPage: NextPage = () => {
   };
 
   return (
-    <div>
-      <h1>Upload video file</h1>
-      <form onSubmit={submit}>
-        <input
-          type="number"
-          name="price"
-          placeholder="Price in cents"
-          onChange={(e) => setPrice(Number(e.target.value))}
-        />
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="textarea"
-          name="description"
-          placeholder="Description"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <VideoUploader onVideoUpload={setAssetId} />
-        <button type="submit">Create video</button>
-      </form>
-    </div>
+    <Container>
+      <div>
+        <h1 className="text-3xl font-bold">Add a video</h1>
+        <form onSubmit={submit} className="space-y-8 divide-y divide-gray-200">
+          <div className="space-y-8 divide-y divide-gray-200">
+            <div>
+              <div className="mt-6 sm:grid gap-y-6 gap-x-4 sm:grid-cols-6">
+                <div className="mb-4 sm:mb-0 sm:col-span-4">
+                  <label
+                    htmlFor="title"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Title
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="title"
+                      name="title"
+                      type="text"
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4 sm:mb-0 sm:col-span-4">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Description
+                  </label>
+                  <div className="mt-1">
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows={3}
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4 sm:mb-0 sm:col-span-2 sm:col-start-1">
+                  <label
+                    htmlFor="price"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Price (in USD)
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      type="text"
+                      name="price"
+                      id="price"
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      onChange={(e) => setPrice(Number(e.target.value))}
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-start-1 col-span-4">
+                  <VideoUploader onVideoUpload={setAssetId} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-5">
+            <div className="flex justify-start">
+              <button
+                type="submit"
+                className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Add video
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </Container>
   );
 };
 
