@@ -1,9 +1,12 @@
 import type { NextPage } from "next";
 import { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
+import Container from "../components/Container";
+import VideoTable from "../components/Video/Table";
+import { Video } from "../models/video";
 
 const DashboardPage: NextPage = () => {
-  const [videos, setVideos] = useState<Array<object>>([]);
+  const [videos, setVideos] = useState<Array<Video>>([]);
   const { user } = useMoralis();
 
   useEffect(() => {
@@ -30,35 +33,12 @@ const DashboardPage: NextPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Videos</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>IPFS CID</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {videos.map((v: any) => {
-            return (
-              <tr key={v.id}>
-                <td>{v.metadata.title}</td>
-                <td>{v.metadata.description}</td>
-                <td>{v.metadata.price}</td>
-                <td>{v.status}</td>
-                <td>{v.ipfs_cid}</td>
-                <td>{v.status === "exported" && <button>Pin video</button>}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <Container>
+      <div>
+        <h1 className="text-3xl font-bold">Added Videos</h1>
+        <VideoTable videos={videos} />
+      </div>
+    </Container>
   );
 };
 

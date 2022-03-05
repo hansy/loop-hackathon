@@ -12,7 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <RouteGuard>
         <Navbar />
-        <Component {...pageProps} />
+        <div className="pt-6 pb-10">
+          <Component {...pageProps} />
+        </div>
       </RouteGuard>
     </MoralisProvider>
   );
