@@ -23,7 +23,7 @@ const UploadPage: NextPage = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${window.location.hostname}/api/videos`, {
+      const res = await fetch("/api/videos", {
         method: "post",
         body: JSON.stringify({ price, title, description, assetId }),
         headers: {
@@ -77,6 +77,7 @@ const UploadPage: NextPage = () => {
                       rows={3}
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
                       onChange={(e) => setDescription(e.target.value)}
+                      defaultValue={""}
                     />
                   </div>
                 </div>

@@ -15,9 +15,7 @@ type VideoUploaderProps = {
 
 const getRequestURL = async (fileName: string) => {
   try {
-    const res: Response = await fetch(
-      `${window.location.hostname}/api/upload?fileName=${fileName}`
-    );
+    const res: Response = await fetch(`/api/upload?fileName=${fileName}`);
     return await res.json();
   } catch {
     return {};
@@ -43,7 +41,7 @@ const VideoUploader: FC<VideoUploaderProps> = ({ onVideoUpload }) => {
       uppy.getPlugin("XHRUpload")?.setOptions({
         endpoint: url,
       });
-
+      console.log(id);
       uppy
         .upload()
         .then(() => onVideoUpload(id))

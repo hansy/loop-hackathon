@@ -25,6 +25,7 @@ export default async function handler(
     url,
     asset: { id },
   } = await response.json();
+  console.log(id);
 
   res.status(200).json({ url, id });
 }

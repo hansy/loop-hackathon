@@ -33,7 +33,10 @@ const Home: NextPage = () => {
         ) : (
           <button
             onClick={() => {
-              authenticate({ provider: "metamask" });
+              authenticate({
+                provider: "metamask",
+                signingMessage: "Welcome to Loop!",
+              });
             }}
           >
             Sign in with MetaMask
