@@ -1,6 +1,19 @@
 import { transferVideotoIPFS } from "../pages/api/_util/livepeer";
 import { postGQL } from "../pages/api/_util/request";
 
+export type VideoMetadata = {
+  title: string;
+  description: string;
+  price: number;
+};
+
+export type Video = {
+  id: number;
+  metadata: VideoMetadata;
+  ipfs_cid: string;
+  status: string;
+};
+
 type VideoObj = {
   title: string;
   description: string;

@@ -35,7 +35,7 @@ const DashboardPage: NextPage = () => {
   return (
     <Container>
       <div>
-        <h1 className="text-3xl font-bold">Added Videos</h1>
+        <h1 className="text-3xl font-bold">Your Videos</h1>
         <VideoTable videos={videos} />
       </div>
     </Container>
