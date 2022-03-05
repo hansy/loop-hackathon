@@ -36,7 +36,7 @@ const config = {
   },
   solidity: "0.8.4",
   typechain: {
-    outDir: "../frontend/src/typechain", //"typechain" for working ONLY in hardhat
+    outDir: "./typechain", //"typechain" for working ONLY in hardhat
     target: "ethers-v5",
   },
 };
