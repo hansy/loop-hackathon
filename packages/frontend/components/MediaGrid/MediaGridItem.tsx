@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import VideoPlayer from "../VideoPlayer";
 import LockImage from "../LockImage";
 import { gweiToMatic } from "../../util/currency";
 import { useMoralis } from "react-moralis";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
 import ABI from "../../abi/VideoManager.json";
 import { get } from "../../util/request";
 
@@ -21,6 +22,7 @@ const MediaGridItem = ({ video }: any) => {
   const [v, setV] = useState<any>({});
   const [purchased, setPurchased] = useState<Boolean>(false);
   const { user } = useMoralis();
+  const toastId = useRef<any>(null);
 
   useEffect(() => {
     const getMetadata = async () => {
@@ -61,7 +63,14 @@ const MediaGridItem = ({ video }: any) => {
         nullAddress,
         { value: video.price }
       );
+      toastId.current = toast.info("Waiting for transaction confirmation...", {
+        autoClose: false,
+      });
       await res.wait();
+      toast.update(toastId.current, {
+        type: toast.TYPE.SUCCESS,
+        render: "Video purchased!",
+      });
 
       console.log("transaction approved!");
 
