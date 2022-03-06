@@ -8,7 +8,7 @@ declare var window: any;
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { authenticate, isAuthenticated, logout } = useMoralis();
+  const { authenticate, isAuthenticated } = useMoralis();
 
   if (isAuthenticated) {
     let redirectPath = String(router.query.redirectUrl);
@@ -56,17 +56,22 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Loop</title>
+        <title>LOOP</title>
         <meta name="description" content="Videos in web3" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        {isAuthenticated ? (
-          <button onClick={logout}>Logout</button>
-        ) : (
-          <button onClick={login}>Sign in with MetaMask</button>
-        )}
+      <main className={`${styles.main} bg-gray-800 -mt-6 -mb-10`}>
+        <h1 className="text-5xl mb-2 text-gray-50">LOOP</h1>
+        <p className="text-3xl text-gray-300 my-10">
+          Add pay-per-view to your videos
+        </p>
+        <button
+          className="mt-8 px-5 py-3 text-2xl border-2 border-gray-50 rounded-lg hover:bg-gray-50 hover:text-gray-800 text-gray-50"
+          onClick={login}
+        >
+          Sign in with MetaMask
+        </button>
       </main>
     </div>
   );

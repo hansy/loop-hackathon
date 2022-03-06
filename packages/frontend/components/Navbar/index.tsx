@@ -24,6 +24,10 @@ const Navbar = () => {
   const router = useRouter();
   const { isAuthenticated, user, logout } = useMoralis();
 
+  if (router.pathname === "/") {
+    return null;
+  }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {() => (

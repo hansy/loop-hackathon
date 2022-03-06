@@ -144,9 +144,9 @@ const DashboardPage: NextPage = () => {
       <div>
         <div className="mx-auto mb-5 max-w-3xl text-center">
           <p className="mb-2">Your video page:</p>
-          <div className=" bg-indigo-500 px-3 py-2 rounded">
+          <div className=" border border-gray-800 px-3 py-2 rounded">
             <Link href={userPageURL.current}>
-              <a className="text-white">{userPageURL.current}</a>
+              <a className="text-indigo-500">{userPageURL.current}</a>
             </Link>
           </div>
         </div>

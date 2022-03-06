@@ -122,14 +122,19 @@ const MediaGridItem = ({ video }: any) => {
   };
 
   useEffect(() => {
-    if (user) {
-      if (
-        video.creator.id.toLowerCase() === user.get("ethAddress").toLowerCase()
-      ) {
-        setPurchased(true);
-      } else {
-        if (video.purchases && video.purchases.length > 0) {
+    if (video.price === 0) {
+      setPurchased(true);
+    } else {
+      if (user) {
+        if (
+          video.creator.id.toLowerCase() ===
+          user.get("ethAddress").toLowerCase()
+        ) {
           setPurchased(true);
+        } else {
+          if (video.purchases && video.purchases.length > 0) {
+            setPurchased(true);
+          }
         }
       }
     }
