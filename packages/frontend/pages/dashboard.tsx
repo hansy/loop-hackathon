@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactText } from "react";
 import { useMoralis } from "react-moralis";
 import Container from "../components/Container";
 import VideoTable from "../components/Video/Table";
@@ -16,7 +16,7 @@ const DashboardPage: NextPage = () => {
   const [deployedVideos, setDeployedVideos] = useState([]);
   const [exportedVideos, setExportedVideos] = useState<Array<Video>>([]);
   const { user } = useMoralis();
-  const toastId = useRef(null);
+  const toastId = useRef<any>(null);
 
   const updateVideoStatus = (videos: Array<Video>, id: any, status: string) => {
     const video = videos.find((video) => video.id === id);
