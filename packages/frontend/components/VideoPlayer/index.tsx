@@ -1,4 +1,4 @@
-const videojs = require("video.js");
+import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import "@videojs/themes/dist/fantasy/index.css";
 import { useEffect, useRef, FC } from "react";

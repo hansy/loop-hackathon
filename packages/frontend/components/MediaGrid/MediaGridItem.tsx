@@ -28,7 +28,8 @@ const MediaGridItem = ({ video }: any) => {
       const res = await contract.getVideoAccess(
         video.id,
         nullAddress,
-        nullAddress
+        nullAddress,
+        { value: video.price }
       );
       await res.wait();
 

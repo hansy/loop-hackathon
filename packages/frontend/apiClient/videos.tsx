@@ -4,12 +4,13 @@ export const getVideos = async (
   userAddress: string,
   purchaserAddress?: string
 ) => {
+  console.log(userAddress, purchaserAddress);
   const loweredAddress = userAddress.toLowerCase();
   let purchases = "";
 
-  if (purchases) {
+  if (purchaserAddress) {
     const loweredPurchaserAddress = purchaserAddress?.toLowerCase();
-    return `
+    purchases = `
       purchases(
         where: {
           user: "${loweredPurchaserAddress}"
