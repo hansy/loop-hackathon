@@ -13,8 +13,12 @@ export const getVideos = async (userAddress: string) => {
       id
       price
       ipfsHash
+      src
       title
       description
+      creator {
+        id
+      }
       purchases {
         user {
           id

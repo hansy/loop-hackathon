@@ -22,7 +22,7 @@ const truncatedAddress = (address: string, length: number = 10) => {
 
 const Navbar = () => {
   const router = useRouter();
-  const { authenticate, isAuthenticated, user, logout } = useMoralis();
+  const { isAuthenticated, user, logout } = useMoralis();
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -91,7 +91,16 @@ const Navbar = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link href={`/${user?.get("ethAddress")}`}>
+                                <a className="block px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-800 hover:text-gray-50">
+                                  My Page
+                                </a>
+                              </Link>
+                            )}
+                          </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
                               <button
