@@ -34,9 +34,7 @@ const MediaGridItem = ({ video }: any) => {
           symbol: "MATIC",
           decimals: 18,
         },
-        rpcUrls: [
-          "https://polygon-mumbai.g.alchemy.com/v2/cAX9SrNq8unHmyPGsiKndelT-uY7Ou97",
-        ],
+        rpcUrls: [`${process.env.NEXT_PUBLIC_ALCHEMY_POLYGON_RPC_URL}`],
         blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
       },
     ];
