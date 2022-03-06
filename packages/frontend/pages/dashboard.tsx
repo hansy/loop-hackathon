@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
-import { useState, useEffect, useRef, ReactText } from "react";
+import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import { useMoralis } from "react-moralis";
 import Container from "../components/Container";
 import VideoTable from "../components/Video/Table";
@@ -17,6 +18,13 @@ const DashboardPage: NextPage = () => {
   const [exportedVideos, setExportedVideos] = useState<Array<Video>>([]);
   const { user } = useMoralis();
   const toastId = useRef<any>(null);
+  let userPageURL = useRef("");
+
+  useEffect(() => {
+    userPageURL.current = `${window.location.origin}/${user?.get(
+      "ethAddress"
+    )}`;
+  }, [user]);
 
   const updateVideoStatus = (videos: Array<Video>, id: any, status: string) => {
     const video = videos.find((video) => video.id === id);
@@ -134,6 +142,14 @@ const DashboardPage: NextPage = () => {
   return (
     <Container>
       <div>
+        <div className="mx-auto mb-5 max-w-3xl text-center">
+          <p className="mb-2">Your video page:</p>
+          <div className=" bg-indigo-500 px-3 py-2 rounded">
+            <Link href={userPageURL.current}>
+              <a className="text-white">{userPageURL.current}</a>
+            </Link>
+          </div>
+        </div>
         <h1 className="text-3xl font-bold">Your Videos</h1>
         <VideoTable
           videos={allVideos(exportedVideos, deployedVideos)}
