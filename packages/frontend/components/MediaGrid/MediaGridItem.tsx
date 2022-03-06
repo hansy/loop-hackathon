@@ -21,8 +21,40 @@ const getIpfsJson = async (ipfsHash: string) => {
 const MediaGridItem = ({ video }: any) => {
   const [v, setV] = useState<any>({});
   const [purchased, setPurchased] = useState<Boolean>(false);
-  const { user } = useMoralis();
+  const { user, authenticate, isAuthenticated } = useMoralis();
   const toastId = useRef<any>(null);
+
+  const login = async () => {
+    const params = [
+      {
+        chainId: "0x13881",
+        chainName: "Mumbai",
+        nativeCurrency: {
+          name: "MATIC Token",
+          symbol: "MATIC",
+          decimals: 18,
+        },
+        rpcUrls: [
+          "https://polygon-mumbai.g.alchemy.com/v2/cAX9SrNq8unHmyPGsiKndelT-uY7Ou97",
+        ],
+        blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+      },
+    ];
+
+    try {
+      await authenticate({
+        provider: "metamask",
+        signingMessage: "Welcome to Loop!",
+      });
+
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     const getMetadata = async () => {
@@ -46,37 +78,46 @@ const MediaGridItem = ({ video }: any) => {
   }, [video]);
 
   const purchase = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      "0x91Aa85a172DD3e7EEA4ad1A4B33E90cbF3B99ed8",
-      ABI.abi,
-      signer
-    );
+    if (!isAuthenticated) {
+      return await login();
+    }
 
-    try {
-      console.log("sending transaction...");
-      const nullAddress = "0x0000000000000000000000000000000000000000";
-      const res = await contract.getVideoAccess(
-        video.id,
-        nullAddress,
-        nullAddress,
-        { value: video.price }
+    if (!purchased) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        "0x91Aa85a172DD3e7EEA4ad1A4B33E90cbF3B99ed8",
+        ABI.abi,
+        signer
       );
-      toastId.current = toast.info("Waiting for transaction confirmation...", {
-        autoClose: false,
-      });
-      await res.wait();
-      toast.update(toastId.current, {
-        type: toast.TYPE.SUCCESS,
-        render: "Video purchased!",
-      });
 
-      console.log("transaction approved!");
+      try {
+        console.log("sending transaction...");
+        const nullAddress = "0x0000000000000000000000000000000000000000";
+        const res = await contract.getVideoAccess(
+          video.id,
+          nullAddress,
+          nullAddress,
+          { value: video.price }
+        );
+        toastId.current = toast.info(
+          "Waiting for transaction confirmation...",
+          {
+            autoClose: false,
+          }
+        );
+        await res.wait();
+        toast.update(toastId.current, {
+          type: toast.TYPE.SUCCESS,
+          render: "Video purchased!",
+        });
 
-      setPurchased(true);
-    } catch (e) {
-      console.log(e);
+        console.log("transaction approved!");
+
+        setPurchased(true);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
