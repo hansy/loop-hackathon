@@ -4,7 +4,7 @@ import LockImage from "../LockImage";
 import { gweiToMatic } from "../../util/currency";
 import { useMoralis } from "react-moralis";
 import { ethers } from "ethers";
-import ABI from "../../../hardhat/artifacts/contracts/VideoManager.sol/VideoManager.json";
+import ABI from "../../abi/VideoManager.json";
 
 const MediaGridItem = ({ video }: any) => {
   const [purchased, setPurchased] = useState<Boolean>(false);

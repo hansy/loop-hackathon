@@ -4,7 +4,7 @@ import { useMoralis } from "react-moralis";
 import Container from "../components/Container";
 import VideoTable from "../components/Video/Table";
 import { Video } from "../models/video";
-import ABI from "../../hardhat/artifacts/contracts/VideoManager.sol/VideoManager.json";
+import ABI from "../abi/VideoManager.json";
 import { ethers } from "ethers";
 import { usdToGwei, gweiToMatic, maticToUsd } from "../util/currency";
 import { getVideos } from "../apiClient/videos";
