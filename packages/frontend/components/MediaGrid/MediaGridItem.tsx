@@ -5,6 +5,7 @@ import { gweiToMatic } from "../../util/currency";
 import { useMoralis } from "react-moralis";
 import { ethers } from "ethers";
 import ABI from "../../abi/VideoManager.json";
+declare var window: any;
 
 const MediaGridItem = ({ video }: any) => {
   const [purchased, setPurchased] = useState<Boolean>(false);

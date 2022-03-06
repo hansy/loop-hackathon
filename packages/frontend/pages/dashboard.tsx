@@ -9,6 +9,8 @@ import { ethers } from "ethers";
 import { usdToGwei, gweiToMatic, maticToUsd } from "../util/currency";
 import { getVideos } from "../apiClient/videos";
 
+declare var window: any;
+
 const DashboardPage: NextPage = () => {
   const [deployedVideos, setDeployedVideos] = useState([]);
   const [exportedVideos, setExportedVideos] = useState<Array<Video>>([]);

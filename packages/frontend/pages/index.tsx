@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
 
+declare var window: any;
+
 const Home: NextPage = () => {
   const router = useRouter();
   const { authenticate, isAuthenticated, logout } = useMoralis();
