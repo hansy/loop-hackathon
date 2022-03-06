@@ -25,13 +25,25 @@ const UploadPage: NextPage = () => {
     try {
       const res = await fetch("/api/videos", {
         method: "post",
-        body: JSON.stringify({ price, title, description, assetId }),
+        body: JSON.stringify({
+          price: price * 100,
+          title,
+          description,
+          assetId,
+        }),
         headers: {
           "content-type": "application/json",
           "x-loop-wa": user?.get("ethAddress"),
         },
       });
-      const video = await res.json();
+      await res.json();
+
+      setPrice(0);
+      setTitle("");
+      setDescription("");
+      setAssetId("");
+
+      console.log("success");
     } catch (e) {
       console.log(e);
     }

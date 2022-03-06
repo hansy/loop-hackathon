@@ -1,10 +1,21 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import { useMoralis } from "react-moralis";
-// import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { getVideos } from "../../apiClient/videos";
 
 const UserPage: NextPage = () => {
-  const { authenticate, isAuthenticated, logout } = useMoralis();
+  const [videos, setVideos] = useState<any>([]);
+  const router = useRouter();
+  const userAddress = `${router.query.username}`;
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      const v = await getVideos(userAddress);
+      setVideos(v);
+    };
+
+    fetchVideos();
+  }, [userAddress]);
 
   return <div>jello</div>;
 };

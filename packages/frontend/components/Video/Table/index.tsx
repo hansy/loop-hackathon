@@ -7,10 +7,6 @@ type VideoTableProps = {
 };
 
 const VideoTable: FC<VideoTableProps> = ({ videos, onActionClick }) => {
-  if (videos.length === 0) {
-    return <p className="mt-4">No videos added yet</p>;
-  }
-
   return (
     <div className="flex flex-col my-4">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -67,7 +63,7 @@ const VideoTable: FC<VideoTableProps> = ({ videos, onActionClick }) => {
                       {video.metadata.description}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {video.metadata.price}
+                      ${video.metadata.price}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {video.status}

@@ -6,9 +6,12 @@ import VideoTable from "../components/Video/Table";
 import { Video } from "../models/video";
 import ABI from "../../hardhat/artifacts/contracts/VideoManager.sol/VideoManager.json";
 import { ethers } from "ethers";
+import { usdToGwei, gweiToMatic, maticToUsd } from "../util/currency";
+import { getVideos } from "../apiClient/videos";
 
 const DashboardPage: NextPage = () => {
-  const [videos, setVideos] = useState<Array<Video>>([]);
+  const [deployedVideos, setDeployedVideos] = useState([]);
+  const [exportedVideos, setExportedVideos] = useState<Array<Video>>([]);
   const { user } = useMoralis();
 
   const updateVideoStatus = (videos: Array<Video>, id: any, status: string) => {
@@ -18,7 +21,7 @@ const DashboardPage: NextPage = () => {
       video.status = status;
     }
 
-    setVideos(videos);
+    setExportedVideos(videos);
   };
 
   const handleAction = async (action: string, data: any) => {
@@ -35,15 +38,19 @@ const DashboardPage: NextPage = () => {
       ABI.abi,
       signer
     );
-    const p = ethers.utils.parseEther("0.01");
+    const gwei = usdToGwei(price);
+
     try {
-      await contract.createVideo(p, ipfsHash, 10, 10);
+      await contract.createVideo(gwei, ipfsHash, 10, 10);
       await fetch("/api/videos", {
-        method: "put",
+        method: "PUT",
         body: JSON.stringify({ id }),
+        headers: {
+          "content-type": "application/json",
+        },
       });
 
-      updateVideoStatus([...videos], id, "deployed");
+      updateVideoStatus([...exportedVideos], id, "deployed");
       console.log("successfully deployed video");
     } catch (e) {
       console.log(e);
@@ -51,7 +58,7 @@ const DashboardPage: NextPage = () => {
   };
 
   useEffect(() => {
-    const getVideos = async () => {
+    const getExportedVideos = async () => {
       if (user) {
         try {
           const res = await fetch("/api/videos", {
@@ -63,21 +70,55 @@ const DashboardPage: NextPage = () => {
           if (res.ok) {
             const data = await res.json();
 
-            setVideos(data.data);
+            setExportedVideos(data.data);
           }
         } catch (e) {
           console.log(e);
         }
       }
     };
-    getVideos();
+    const getDeployedVideos = async () => {
+      if (user) {
+        try {
+          const deployedVids = await getVideos(user.get("ethAddress"));
+
+          setDeployedVideos(
+            deployedVids.map((v: any) => ({
+              id: v.id,
+              metadata: {
+                title: v.title,
+                description: v.description,
+                price: maticToUsd(gweiToMatic(v.price)),
+              },
+              ipfs_cid: v.id,
+              status: "deployed",
+            }))
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+
+    getDeployedVideos();
+    getExportedVideos();
   }, []);
+
+  const allVideos = (
+    exportedVideos: Array<any>,
+    deployedVideos: Array<any>
+  ) => {
+    return [...deployedVideos, ...exportedVideos];
+  };
 
   return (
     <Container>
       <div>
         <h1 className="text-3xl font-bold">Your Videos</h1>
-        <VideoTable videos={videos} onActionClick={handleAction} />
+        <VideoTable
+          videos={allVideos(exportedVideos, deployedVideos)}
+          onActionClick={handleAction}
+        />
       </div>
     </Container>
   );

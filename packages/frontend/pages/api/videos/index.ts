@@ -36,13 +36,13 @@ export default async function handler(
       return res.status(e.statusCode).json(e);
     }
   } else if (method === "PUT") {
-    const { videoId } = req.body;
+    const { id } = req.body;
 
     try {
-      await getUserByWalletAddress("eth", address);
+      // await getUserByWalletAddress("eth", address);
 
       // this is not secure
-      const video = await updateVideo(videoId, {
+      const video = await updateVideo(id, {
         status: "deployed",
       });
 
