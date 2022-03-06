@@ -19,7 +19,7 @@ const UploadPage: NextPage = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [assetId, setAssetId] = useState<string>("");
-  const [buttonDisabled, setButtonDisabled] = useState<Boolean>(false);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
 
   const { user } = useMoralis();
   const router = useRouter();
