@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useMoralis } from "react-moralis";
 import Container from "../components/Container";
 import VideoTable from "../components/Video/Table";
@@ -8,6 +8,7 @@ import ABI from "../abi/VideoManager.json";
 import { ethers } from "ethers";
 import { usdToGwei, gweiToMatic, maticToUsd } from "../util/currency";
 import { getVideos } from "../apiClient/videos";
+import { toast } from "react-toastify";
 
 declare var window: any;
 
@@ -15,6 +16,7 @@ const DashboardPage: NextPage = () => {
   const [deployedVideos, setDeployedVideos] = useState([]);
   const [exportedVideos, setExportedVideos] = useState<Array<Video>>([]);
   const { user } = useMoralis();
+  const toastId = useRef(null);
 
   const updateVideoStatus = (videos: Array<Video>, id: any, status: string) => {
     const video = videos.find((video) => video.id === id);
@@ -43,6 +45,9 @@ const DashboardPage: NextPage = () => {
     const gwei = usdToGwei(price);
 
     try {
+      toastId.current = toast.info("Deploying to contract...", {
+        autoClose: false,
+      });
       await contract.createVideo(gwei, ipfsHash, 10, 10);
       await fetch("/api/videos", {
         method: "PUT",
@@ -51,10 +56,18 @@ const DashboardPage: NextPage = () => {
           "content-type": "application/json",
         },
       });
+      toast.update(toastId.current, {
+        type: toast.TYPE.SUCCESS,
+        render: "Video is deployed! It will now appear on your page!",
+      });
 
       updateVideoStatus([...exportedVideos], id, "deployed");
       console.log("successfully deployed video");
     } catch (e) {
+      toast.update(toastId.current, {
+        type: toast.TYPE.ERROR,
+        render: "Video not deployed",
+      });
       console.log(e);
     }
   };

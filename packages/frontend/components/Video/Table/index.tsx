@@ -6,6 +6,12 @@ type VideoTableProps = {
   onActionClick: (action: string, data: any) => void;
 };
 
+const STATUS_MAP = {
+  transcoded: "Exporting to IPFS...",
+  exported: "Exported",
+  deployed: "Deployed",
+};
+
 const VideoTable: FC<VideoTableProps> = ({ videos, onActionClick }) => {
   return (
     <div className="flex flex-col my-4">
@@ -66,7 +72,7 @@ const VideoTable: FC<VideoTableProps> = ({ videos, onActionClick }) => {
                       ${video.metadata.price}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {video.status}
+                      {STATUS_MAP[video.status]}
                     </td>
                     <td className="px-6 py-4 whitespace-normal text-sm text-gray-500">
                       {video.ipfs_cid}

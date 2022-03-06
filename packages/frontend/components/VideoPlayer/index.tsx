@@ -34,10 +34,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ videoId, src }) => {
 
       playerRef.current = videojs(videoElement, options);
     } else {
-      // you can update player here [update player through props]
-      // const player = playerRef.current;
-      // player.autoplay(options.autoplay);
-      // player.src(options.sources);
+      playerRef.current.src(options.sources);
     }
   }, [videoRef, src]);
 

@@ -5,13 +5,43 @@ import { gweiToMatic } from "../../util/currency";
 import { useMoralis } from "react-moralis";
 import { ethers } from "ethers";
 import ABI from "../../abi/VideoManager.json";
+import { get } from "../../util/request";
+
 declare var window: any;
 
+const getIpfsJson = async (ipfsHash: string) => {
+  try {
+    return await get(`https://gateway.pinata.cloud/ipfs/${ipfsHash}/`);
+  } catch {
+    return {};
+  }
+};
+
 const MediaGridItem = ({ video }: any) => {
+  const [v, setV] = useState<any>({});
   const [purchased, setPurchased] = useState<Boolean>(false);
   const { user } = useMoralis();
 
-  console.log(user?.get("ethAddress"));
+  useEffect(() => {
+    const getMetadata = async () => {
+      if (!video.src) {
+        try {
+          const json = await getIpfsJson(video.id);
+
+          setV({
+            ...video,
+            src: json.video_url,
+            title: json.title,
+            description: json.desription,
+          });
+        } catch (e) {}
+      } else {
+        setV(video);
+      }
+    };
+
+    getMetadata();
+  }, [video]);
 
   const purchase = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -58,13 +88,13 @@ const MediaGridItem = ({ video }: any) => {
   return (
     <div>
       <div className="group w-full bg-gray-100 overflow-hidden relative h-80">
-        {purchased && <VideoPlayer videoId={video.id} src={video.src} />}
+        {purchased && <VideoPlayer videoId={v.id} src={v.src} />}
         {!purchased && (
-          <LockImage maticPrice={gweiToMatic(video.price)} onClick={purchase} />
+          <LockImage maticPrice={gweiToMatic(v.price)} onClick={purchase} />
         )}
       </div>
       <p className="mt-2 block text-md font-bold text-gray-900 truncate pointer-events-none">
-        {video.title}
+        {v.title}
       </p>
     </div>
   );

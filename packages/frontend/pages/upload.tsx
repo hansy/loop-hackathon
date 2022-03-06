@@ -4,6 +4,8 @@ import * as yup from "yup";
 import VideoUploader from "../components/VideoUploader";
 import { useMoralis } from "react-moralis";
 import Container from "../components/Container";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const videoSchema = yup.object().shape({
   price: yup.number().min(0).integer(),
@@ -17,35 +19,50 @@ const UploadPage: NextPage = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [assetId, setAssetId] = useState<string>("");
+  const [buttonDisabled, setButtonDisabled] = useState<Boolean>(false);
+
   const { user } = useMoralis();
+  const router = useRouter();
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch("/api/videos", {
-        method: "post",
-        body: JSON.stringify({
-          price: price * 100,
-          title,
-          description,
-          assetId,
-        }),
-        headers: {
-          "content-type": "application/json",
-          "x-loop-wa": user?.get("ethAddress"),
-        },
-      });
-      await res.json();
+    if (!buttonDisabled) {
+      setButtonDisabled(true);
 
-      setPrice(0);
-      setTitle("");
-      setDescription("");
-      setAssetId("");
+      try {
+        const res = await fetch("/api/videos", {
+          method: "post",
+          body: JSON.stringify({
+            price: price * 100,
+            title,
+            description,
+            assetId,
+          }),
+          headers: {
+            "content-type": "application/json",
+            "x-loop-wa": user?.get("ethAddress"),
+          },
+        });
+        await res.json();
 
-      console.log("success");
-    } catch (e) {
-      console.log(e);
+        setPrice(0);
+        setTitle("");
+        setDescription("");
+        setAssetId("");
+
+        toast.success(
+          "Video successfully uploaded! It's being prepped for export, so check back on the status of it (1-2 min) to deploy it!",
+          { autoClose: false }
+        );
+        router.push({ pathname: "/dashboard" });
+
+        console.log("success");
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setButtonDisabled(false);
+      }
     }
   };
 
@@ -104,7 +121,7 @@ const UploadPage: NextPage = () => {
                   </label>
                   <div className="mt-1">
                     <input
-                      type="text"
+                      type="number"
                       name="price"
                       id="price"
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
@@ -125,6 +142,7 @@ const UploadPage: NextPage = () => {
             <div className="flex justify-start">
               <button
                 type="submit"
+                disabled={buttonDisabled}
                 className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Add video

@@ -1,6 +1,8 @@
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import { MoralisProvider } from "react-moralis";
 import type { AppProps } from "next/app";
+import { ToastContainer } from "react-toastify";
 import RouteGuard from "../components/RouteGuard";
 import Navbar from "../components/Navbar";
 
@@ -12,6 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <RouteGuard>
         <Navbar />
+        <ToastContainer />
         <div className="pt-6 pb-10">
           <Component {...pageProps} />
         </div>
