@@ -1,4 +1,4 @@
-import videojs from "video.js";
+const videojs = require("video.js");
 import "video.js/dist/video-js.css";
 import "@videojs/themes/dist/fantasy/index.css";
 import { useEffect, useRef, FC } from "react";
@@ -11,7 +11,6 @@ type VideoPlayerProps = {
 const VideoPlayer: FC<VideoPlayerProps> = ({ videoId, src }) => {
   const playerRef = useRef(null);
   const videoRef = useRef(null);
-  console.log(src);
 
   useEffect(() => {
     const options = {
