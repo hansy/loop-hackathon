@@ -109,7 +109,7 @@ const DashboardPage: NextPage = () => {
 
     getDeployedVideos();
     getExportedVideos();
-  }, []);
+  }, [user]);
 
   const allVideos = (
     exportedVideos: Array<any>,
