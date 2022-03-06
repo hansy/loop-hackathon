@@ -70,7 +70,12 @@ const DashboardPage: NextPage = () => {
           if (res.ok) {
             const data = await res.json();
 
-            setExportedVideos(data.data);
+            setExportedVideos(
+              data.data.map((v: any) => ({
+                ...v,
+                metadata: { ...v.metadata, price: v.metadata.price / 100 },
+              }))
+            );
           }
         } catch (e) {
           console.log(e);
