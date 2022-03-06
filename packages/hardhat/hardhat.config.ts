@@ -5,11 +5,12 @@ dotenvConfig({ path: resolve(__dirname, "./.env") });
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
 import "hardhat-gas-reporter";
+import "@nomiclabs/hardhat-etherscan";
 
-// const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 // const OPTIMISM_KOVAN_URL = process.env.OPTIMISM_KOVAN;
 // const RINKEBY_URL = process.env.RINKEBY;
-// const MUMBAI_URL = process.env.MUMBAI;
+const MUMBAI_URL = process.env.MUMBAI;
 
 const config = {
   defaultNetwork: "hardhat",
@@ -29,15 +30,18 @@ const config = {
     //    url: RINKEBY_URL,
     //    accounts: [PRIVATE_KEY],
     //  },
-    //  mumbai: {
-    //    url: MUMBAI_URL,
-    //    accounts: [PRIVATE_KEY],
-    //  },
+    mumbai: {
+      url: MUMBAI_URL,
+      accounts: [PRIVATE_KEY],
+    },
   },
   solidity: "0.8.4",
   typechain: {
     outDir: "./typechain", //"typechain" for working ONLY in hardhat
     target: "ethers-v5",
+  },
+  etherscan: {
+    apiKey: "AIXDV583YXC676X1VV84VGP8Y9VRDBJV7F",
   },
 };
 

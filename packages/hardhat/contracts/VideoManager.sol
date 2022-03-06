@@ -26,6 +26,8 @@ event VideoCreated(address creator, uint256 price, string videoHash, uint256 ref
 event VideoEdited(address creator, uint256 price, string videoHash, uint256 referalFee, uint256 publisherFee);
 event VideoPurchased(address buyer, uint256 price, address refferer, string videoHash, address publisher);
 event VideoDisabled(string videoHash, address creator);
+event VideoEnabled(string videoHash, address creator);
+
 
 constructor() {}
 
@@ -93,7 +95,14 @@ function editVideo(uint256 _price, string calldata _videoHash, uint256 _referalF
 function disableVideo(string calldata _videoHash) external {
 	if(videos[_videoHash].creator != msg.sender) revert DoNotOwnVideo();
 	videos[_videoHash].disabled = true;
+	emit VideoDisabled(_videoHash, msg.sender);
 }
+
+function enableVideo(string calldata _videoHash) external {
+	if(videos[_videoHash].creator != msg.sender) revert DoNotOwnVideo();
+	videos[_videoHash].disabled = false;
+	emit VideoEnabled(_videoHash, msg.sender);
+} 
 
 
 }
