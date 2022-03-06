@@ -7,13 +7,11 @@ import MediaGrid from "../../components/MediaGrid";
 import { useMoralis } from "react-moralis";
 import { ethers } from "ethers";
 
-declare var window: any;
-
 const UserPage: NextPage = () => {
   const [videos, setVideos] = useState<any>([]);
   const [userAddress, setUserAddress] = useState<string>("");
   const router = useRouter();
-  const queryAddress = `${router.query.username}`;
+  const queryAddress = router.query.username;
   const { user } = useMoralis();
 
   useEffect(() => {
@@ -21,12 +19,15 @@ const UserPage: NextPage = () => {
       const provider = new ethers.providers.StaticJsonRpcProvider(
         `${process.env.NEXT_PUBLIC_INFURA_ENDPOINT}`
       );
-      const address = await provider.resolveName(queryAddress);
 
-      if (address) {
-        setUserAddress(address);
-      } else {
-        setUserAddress(queryAddress);
+      if (queryAddress) {
+        const address = await provider.resolveName(`${queryAddress}`);
+
+        if (address) {
+          setUserAddress(address);
+        } else {
+          setUserAddress(`${queryAddress}`);
+        }
       }
     };
 
@@ -45,9 +46,7 @@ const UserPage: NextPage = () => {
       setVideos(v);
     };
 
-    if (userAddress) {
-      fetchVideos();
-    }
+    fetchVideos();
   }, [userAddress, user]);
 
   return (
