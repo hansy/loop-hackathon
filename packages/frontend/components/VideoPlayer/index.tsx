@@ -9,7 +9,7 @@ type VideoPlayerProps = {
 };
 
 const VideoPlayer: FC<VideoPlayerProps> = ({ videoId, src }) => {
-  const playerRef = useRef(null);
+  const playerRef = useRef<any>(null);
   const videoRef = useRef(null);
 
   useEffect(() => {
