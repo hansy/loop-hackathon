@@ -71,6 +71,7 @@ const UploadPage: NextPage = () => {
                       type="text"
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                       onChange={(e) => setTitle(e.target.value)}
+                      value={title}
                     />
                   </div>
                 </div>
@@ -89,7 +90,7 @@ const UploadPage: NextPage = () => {
                       rows={3}
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
                       onChange={(e) => setDescription(e.target.value)}
-                      defaultValue={""}
+                      value={description}
                     />
                   </div>
                 </div>
@@ -107,6 +108,7 @@ const UploadPage: NextPage = () => {
                       name="price"
                       id="price"
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      value={price}
                       onChange={(e) => setPrice(Number(e.target.value))}
                     />
                   </div>
