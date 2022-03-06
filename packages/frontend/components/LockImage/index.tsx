@@ -8,8 +8,8 @@ type LockImageProps = {
 const LockImage: FC<LockImageProps> = ({ maticPrice, onClick }) => {
   return (
     <div>
-      <div></div>
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="w-full h-full"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-80 flex justify-center items-center">
         <button
           onClick={onClick}
           type="button"
@@ -18,66 +18,41 @@ const LockImage: FC<LockImageProps> = ({ maticPrice, onClick }) => {
           <div className="flex flex-col justify-center items-center">
             <div>
               <svg
-                className="h-10 w-10 inline-block"
-                clipRule="evenodd"
-                fillRule="evenodd"
-                strokeLinejoin="round"
-                strokeMiterlimit="2"
-                viewBox="0 0 560 400"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
+                width="315"
+                height="315"
+                fill="none"
+                viewBox="0 0 315 315"
+                className="h-10 w-10 inline-block mr-2 -mt-1"
               >
-                <linearGradient id="a">
-                  <stop offset="0" stopColor="#00ffa3" />
-                  <stop offset="1" stopColor="#dc1fff" />
-                </linearGradient>
-                <linearGradient
-                  id="b"
-                  gradientTransform="matrix(-219.666 420.749 -420.749 -219.666 360.879 -37.4553)"
-                  gradientUnits="userSpaceOnUse"
-                  x1="0"
-                  x2="1"
-                  xlinkHref="#a"
-                  y1="0"
-                  y2="0"
+                <path
+                  fill="#2891F9"
+                  d="M52.5 96.9238L157.5 157.524V197.924L87.5 157.524V238.324L52.5 218.124V96.9238Z"
                 />
-                <linearGradient
-                  id="c"
-                  gradientTransform="matrix(-219.666 420.749 -420.749 -219.666 264.829 -87.6014)"
-                  gradientUnits="userSpaceOnUse"
-                  x1="0"
-                  x2="1"
-                  xlinkHref="#a"
-                  y1="0"
-                  y2="0"
+                <path
+                  fill="#2BBDF7"
+                  d="M87.5 238.324V157.524L122.5 177.724V218.124L87.5 238.324Z"
                 />
-                <linearGradient
-                  id="d"
-                  gradientTransform="matrix(-219.666 420.749 -420.749 -219.666 312.548 -62.688)"
-                  gradientUnits="userSpaceOnUse"
-                  x1="0"
-                  x2="1"
-                  xlinkHref="#a"
-                  y1="0"
-                  y2="0"
+                <path
+                  fill="#2B6DEF"
+                  d="M52.5 96.9239L87.5 76.7239L192.5 137.324L157.5 157.524L52.5 96.9239Z"
                 />
-                <g
-                  fillRule="nonzero"
-                  transform="matrix(.641643 0 0 .641643 152.409 100)"
-                >
-                  <path
-                    d="m64.6 237.9c2.4-2.4 5.7-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8h-317.4c-5.8 0-8.7-7-4.6-11.1z"
-                    fill="url(#b)"
-                  />
-                  <path
-                    d="m64.6 3.8c2.5-2.4 5.8-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8h-317.4c-5.8 0-8.7-7-4.6-11.1z"
-                    fill="url(#c)"
-                  />
-                  <path
-                    d="m333.1 120.1c-2.4-2.4-5.7-3.8-9.2-3.8h-317.4c-5.8 0-8.7 7-4.6 11.1l62.7 62.7c2.4 2.4 5.7 3.8 9.2 3.8h317.4c5.8 0 8.7-7 4.6-11.1z"
-                    fill="url(#d)"
-                  />
-                </g>
+                <path
+                  fill="#2BBDF7"
+                  d="M157.5 157.524L192.5 137.324V177.724L157.5 197.924V157.524Z"
+                />
+                <path
+                  fill="#2891F9"
+                  d="M192.5 96.9238V218.124L227.5 238.324V117.124L192.5 96.9238Z"
+                />
+                <path
+                  fill="#2BBDF7"
+                  d="M262.5 96.9238L227.5 117.124V238.324L262.5 218.124V96.9238Z"
+                />
+                <path
+                  fill="#2B6DEF"
+                  d="M227.5 76.7239L262.5 96.9239L227.5 117.124L192.5 96.9239L227.5 76.7239Z"
+                />
               </svg>
               <span className="-ml-1 text-lg">{maticPrice}</span>
             </div>

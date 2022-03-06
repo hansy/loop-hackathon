@@ -4,7 +4,7 @@ import "@videojs/themes/dist/fantasy/index.css";
 import { useEffect, useRef, FC } from "react";
 
 type VideoPlayerProps = {
-  videoId: string | number;
+  videoId: string;
   src: string;
 };
 

@@ -1,7 +1,24 @@
 import { postGQL } from "../util/request";
 
-export const getVideos = async (userAddress: string) => {
-  const loweredAddress = userAddress.toLocaleLowerCase();
+export const getVideos = async (
+  userAddress: string,
+  purchaserAddress?: string
+) => {
+  const loweredAddress = userAddress.toLowerCase();
+  let purchases = "";
+
+  if (purchases) {
+    const loweredPurchaserAddress = purchaserAddress?.toLowerCase();
+    return `
+      purchases(
+        where: {
+          user: "${loweredPurchaserAddress}"
+        }
+      ) {
+        id
+      }
+    `;
+  }
 
   const query = `
   query {
@@ -19,11 +36,7 @@ export const getVideos = async (userAddress: string) => {
       creator {
         id
       }
-      purchases {
-        user {
-          id
-        }
-      }
+      ${purchases}
     }
   }
     
