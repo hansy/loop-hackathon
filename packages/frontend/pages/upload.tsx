@@ -70,6 +70,17 @@ const UploadPage: NextPage = () => {
     <Container>
       <div>
         <h1 className="text-3xl font-bold">Add a video</h1>
+        <p className="mt-3">
+          Need a video? Grab one at{" "}
+          <a
+            href="https://pixabay.com/videos/search/nature/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-500"
+          >
+            Pixabay
+          </a>
+        </p>
         <form onSubmit={submit} className="space-y-8 divide-y divide-gray-200">
           <div className="space-y-8 divide-y divide-gray-200">
             <div>
@@ -133,6 +144,9 @@ const UploadPage: NextPage = () => {
 
                 <div className="sm:col-start-1 col-span-4">
                   <VideoUploader onVideoUpload={setAssetId} />
+                  <p className="text-sm text-gray-500 mt-1">
+                    * Currently supporting mp4 videos with AAC audio codec
+                  </p>
                 </div>
               </div>
             </div>
