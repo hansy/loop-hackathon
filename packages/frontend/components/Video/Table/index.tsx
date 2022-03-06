@@ -1,37 +1,12 @@
 import { FC } from "react";
 import { Video } from "../../../models/video";
-import ABI from "../../../../hardhat/artifacts/contracts/VideoManager.sol/VideoManager.json";
-import { ethers } from "ethers";
 
 type VideoTableProps = {
   videos: Array<Video>;
+  onActionClick: (action: string, data: any) => void;
 };
 
-const VideoTable: FC<VideoTableProps> = ({ videos }) => {
-  const storeVideo = async (price: number, ipfsHash: string) => {
-    // const provider = new ethers.providers.StaticJsonRpcProvider(
-    //   process.env.NUXT_PUBLIC_RPC_PROVIDER
-    // );
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    console.log(signer);
-    const contract = new ethers.Contract(
-      "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      ABI.abi,
-      signer
-    );
-    const p = ethers.utils.parseEther("0.01");
-    try {
-      const res = await contract.createVideo(p, ipfsHash, 10, 10);
-      console.log(res);
-      const txReceipt = await res.wait();
-      console.log(txReceipt);
-    } catch (e) {
-      console.log(e);
-    }
-    // const contract = new web3.eth.Contract(ABI, "0x5FbDB2315678afecb367f032d93F642f64180aa3");
-  };
-
+const VideoTable: FC<VideoTableProps> = ({ videos, onActionClick }) => {
   if (videos.length === 0) {
     return <p className="mt-4">No videos added yet</p>;
   }
@@ -102,8 +77,17 @@ const VideoTable: FC<VideoTableProps> = ({ videos }) => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {video.status === "exported" && (
-                        <button onClick={() => storeVideo(10, video.ipfs_cid)}>
-                          Store video
+                        <button
+                          className="px-2 py-1 text-white bg-green-600 rounded"
+                          onClick={() =>
+                            onActionClick("deploy", {
+                              id: video.id,
+                              price: video.metadata.price,
+                              ipfsCid: video.ipfs_cid,
+                            })
+                          }
+                        >
+                          Deploy
                         </button>
                       )}
                     </td>

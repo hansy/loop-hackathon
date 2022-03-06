@@ -63,6 +63,7 @@ export const getVideos = async (userId: number) => {
       videos(
         where: {
           user_id: { _eq: ${userId} }
+          status: { _neq: deployed }
         }
         order_by: { created_at: desc }
       ) {
